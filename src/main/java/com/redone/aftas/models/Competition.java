@@ -24,7 +24,7 @@ public class Competition {
     private LocalTime startTime;
     private LocalTime endTime;
     private Integer numberOfParticipants;
-    private String location;
+    private String localisation;
     private double amount;
     @OneToMany(mappedBy = "competition", fetch = FetchType.LAZY)
     private List<Ranking> rankings;

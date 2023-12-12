@@ -21,7 +21,7 @@ public class Fish {
     private Double averageWeight;
     @OneToMany(mappedBy = "fish")
     private List<Hunting> huntingList;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "level_id")
     private Level level;
 }
