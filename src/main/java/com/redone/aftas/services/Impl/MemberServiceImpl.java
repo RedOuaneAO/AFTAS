@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -16,6 +18,10 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     @Override
     public Member addNewMember(MemberRequestDto memberRequestDto) {
+        Optional<Member> memberExist = memberRepository.findById(memberRequestDto.getMemberNum());
+        if(memberExist.isPresent()){
+            throw new RuntimeException("this number is already registered to another member");
+        }
         Member member = memberRequestDto.mapToMemberEntity();
         member.setAccessionDate(new Date());
         return memberRepository.save(member);

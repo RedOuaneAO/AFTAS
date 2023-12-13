@@ -7,6 +7,8 @@ import com.redone.aftas.services.FishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FishServiceImpl implements FishService {
@@ -14,5 +16,10 @@ public class FishServiceImpl implements FishService {
     @Override
     public Fish addFish(FishRequestDto fishRequestDto) {
         return fishRepository.save(fishRequestDto.mapToFishEntity());
+    }
+
+    @Override
+    public List<Fish> getAllFishs() {
+        return fishRepository.findAll();
     }
 }

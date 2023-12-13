@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,13 +19,12 @@ import java.util.List;
 public class Competition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String code;
-    private LocalDateTime date;
+    private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private Integer numberOfParticipants;
-    private String localisation;
+    private String location;
     private double amount;
     @OneToMany(mappedBy = "competition", fetch = FetchType.LAZY)
     private List<Ranking> rankings;

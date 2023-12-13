@@ -1,5 +1,7 @@
 package com.redone.aftas.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,11 +17,10 @@ import java.util.List;
 @Data
 public class Fish {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
     private Double averageWeight;
     @OneToMany(mappedBy = "fish")
+    @JsonIgnore
     private List<Hunting> huntingList;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "level_id")
