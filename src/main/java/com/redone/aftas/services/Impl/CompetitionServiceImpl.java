@@ -15,7 +15,12 @@ public class CompetitionServiceImpl implements CompetitionService {
     private final CompetitionRepository competitionRepository;
     @Override
     public Competition addCompetition(CompetitionRequestDto competitionRequestDto) {
-
+        if(competitionRequestDto.getStartTime().isAfter(competitionRequestDto.getEndTime())){
+            throw new RuntimeException("the start time cannot be after end time");
+        }
+        if(competitionRepository.existsByDate(competitionRequestDto.getDate())){
+            throw  new RuntimeException("you have already a competition in this date");
+        }
         return competitionRepository.save(competitionRequestDto.mapToCompetitionEntity());
     }
 

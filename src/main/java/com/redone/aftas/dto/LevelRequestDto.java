@@ -11,13 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class LevelRequestDto {
-    private Integer code;
+
     private String description;
     private Integer points;
 
     public Level mapToLevelEntity(){
         return Level.builder()
-                .code(code)
                 .description(description)
                 .points(points)
                 .build();
