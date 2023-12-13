@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class FishRequestDto {
     private String name;
     private Double averageWeight;
-    private Long levelId;
+    private Integer levelCode;
 
     public Fish mapToFishEntity(){
             return Fish.builder()
                     .name(name)
                     .averageWeight(averageWeight)
-                    .level(Level.builder().id(levelId).build())
+                    .level(Level.builder().code(levelCode).build())
                     .build();
     }
 }

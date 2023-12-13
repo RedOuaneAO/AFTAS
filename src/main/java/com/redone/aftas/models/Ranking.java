@@ -22,12 +22,12 @@ public class Ranking {
     @ManyToOne
     @JsonBackReference
     @MapsId("competitionCode")
-    @JoinColumn(name = "competition_id")
+    @JoinColumn(name = "competition_code")
     private Competition competition;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_num")
     @MapsId("memberNum")
     private Member member;
 }

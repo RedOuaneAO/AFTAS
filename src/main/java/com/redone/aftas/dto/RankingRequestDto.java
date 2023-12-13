@@ -17,13 +17,12 @@ import lombok.NoArgsConstructor;
 public class RankingRequestDto {
     private int rank;
     private int score;
-    private Long competitionId;
-    private Long memberId;
+    private String competitionCode;
+    private Integer memberNum;
     public Ranking mapToRankingEntity(){
-        return Ranking.builder()
-                .id(RankId.builder().competitionId(competitionId).memberId(memberId).build())
-                .competition(Competition.builder().id(competitionId).build())
-                .member(Member.builder().id(memberId).build())
+        return Ranking.builder().id(RankId.builder().competitionCode(competitionCode).memberNum(memberNum).build())
+                .competition(Competition.builder().code(competitionCode).build())
+                .member(Member.builder().num(memberNum).build())
                 .rank(rank)
                 .score(score)
                 .build();
