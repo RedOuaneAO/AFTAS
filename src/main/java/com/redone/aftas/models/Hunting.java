@@ -18,14 +18,14 @@ public class Hunting {
     private Integer numberOfFish;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "competition_id")
+    @JoinColumn(name = "competition_code")
     private Competition competition;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_num")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fish_id")
+    @JoinColumn(name = "fish_name")
     private Fish fish;
 }

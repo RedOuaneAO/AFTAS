@@ -14,13 +14,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class HuntingRequestDto {
-    private int numberOfFish;
+    private Double fishWeight;
     private String competitionCode;
     private  Integer memberNum;
     private String fishName;
     public Hunting mapToHuntingEntity(){
         return Hunting.builder()
-                .numberOfFish(numberOfFish)
                 .member(Member.builder().num(memberNum).build())
                 .competition(Competition.builder().code(competitionCode).build())
                 .fish(Fish.builder().name(fishName).build())
