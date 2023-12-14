@@ -7,6 +7,8 @@ import com.redone.aftas.services.HuntingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class HuntingServiceImpl implements HuntingService {
@@ -28,7 +30,16 @@ public class HuntingServiceImpl implements HuntingService {
         if (huntingRequestDto.getFishWeight()< fish.getAverageWeight()){
             throw new RuntimeException("Your fish's weight is below average");
         }
+        Optional<Hunting> HuntingExist = huntingRepository.findByCompetitionAndMemberAndFish(competition,member,fish);
         Hunting hunting = huntingRequestDto.mapToHuntingEntity();
-        return huntingRepository.save(hunting);
+        if(HuntingExist.isPresent()){
+            Hunting oldHunting =HuntingExist.get();
+            oldHunting.setNumberOfFish(oldHunting.getNumberOfFish()+1);
+            return huntingRepository.save(oldHunting);
+        }else {
+            hunting.setNumberOfFish(1);
+            return huntingRepository.save(hunting);
+        }
+
     }
 }

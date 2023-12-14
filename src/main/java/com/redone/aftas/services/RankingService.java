@@ -11,4 +11,6 @@ public interface RankingService {
     Ranking addRank(RankingRequestDto rankingRequestDto);
 
     List<Ranking> getAllRanks();
+
+    List<Ranking> getScore(String competitionCode);
 }

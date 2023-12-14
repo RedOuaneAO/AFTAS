@@ -22,4 +22,8 @@ public class RankingController {
     public List<Ranking> getAllRanks(){
         return rankingService.getAllRanks();
     }
+    @GetMapping("Score/{id}")
+    public List<Ranking> getScore(@PathVariable String competitionCode){
+        return rankingService.getScore(competitionCode);
+    }
 }

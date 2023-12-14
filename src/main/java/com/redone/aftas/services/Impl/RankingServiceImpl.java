@@ -38,4 +38,9 @@ public class RankingServiceImpl implements RankingService {
     public List<Ranking> getAllRanks() {
         return rankingRepository.findAll();
     }
+
+    @Override
+    public List<Ranking> getScore(String competitionCode) {
+        return null;
+    }
 }

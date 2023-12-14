@@ -25,6 +25,16 @@ public class ExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
+//    @ExceptionHandler(NoSuchElementException.class)
+//    public ResponseEntity<ErrorResponseSimpleFormat> handleNoSuchElementException(
+//            NoSuchElementException exception, HttpServletRequest request) {
+//
+//        errorSimpleResponse.setTimestamp(LocalDateTime.now());
+//        errorSimpleResponse.setMessage("Resource Not Found");
+//        errorSimpleResponse.setDetails(Collections.singletonList(exception.getMessage()));
+//        errorSimpleResponse.setPath(request.getRequestURI());
+//
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorSimpleResponse);
+//    }
 
 }
