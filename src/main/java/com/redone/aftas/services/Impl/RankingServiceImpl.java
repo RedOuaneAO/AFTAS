@@ -1,18 +1,17 @@
 package com.redone.aftas.services.Impl;
 
-import com.redone.aftas.dto.RankingRequestDto;
-import com.redone.aftas.models.Competition;
-import com.redone.aftas.models.Member;
-import com.redone.aftas.models.Ranking;
-import com.redone.aftas.repositories.CompetitionRepository;
-import com.redone.aftas.repositories.MemberRepository;
-import com.redone.aftas.repositories.RankingRepository;
+import com.redone.aftas.dto.huntingDto.HuntingResponseDto;
+import com.redone.aftas.dto.ParticipateInCompetitionDto;
+import com.redone.aftas.models.*;
+import com.redone.aftas.repositories.*;
 import com.redone.aftas.services.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,17 +19,23 @@ public class RankingServiceImpl implements RankingService {
     private final RankingRepository rankingRepository;
     private final CompetitionRepository competitionRepository;
     private  final MemberRepository  memberRepository;
+    private final HuntingRepository huntingRepository;
+    private final FishRepository fishRepository;
+    private final LevelRepository levelRepository;
+
     @Override
-    public Ranking addRank(RankingRequestDto rankingRequestDto) {
-        Competition competition = competitionRepository.findById(rankingRequestDto.getCompetitionCode())
-                .orElseThrow(()-> new RuntimeException("There is no Competition with this code : " + rankingRequestDto.getCompetitionCode()));
-        Member member = memberRepository.findById(rankingRequestDto.getMemberNum())
-                .orElseThrow(()->new RuntimeException("There is no Member With This Number : "  + rankingRequestDto.getMemberNum()));
-        Ranking ranking = rankingRequestDto.mapToRankingEntity();
+    public Ranking addRank(ParticipateInCompetitionDto participateInCompetitionDto) {
+        Competition competition = competitionRepository.findById(participateInCompetitionDto.getCompetitionCode())
+                .orElseThrow(()-> new RuntimeException("There is no Competition with this code : " + participateInCompetitionDto.getCompetitionCode()));
+        Member member = memberRepository.findById(participateInCompetitionDto.getMemberNum())
+                .orElseThrow(()->new RuntimeException("There is no Member With This Number : "  + participateInCompetitionDto.getMemberNum()));
+        Ranking ranking = participateInCompetitionDto.mapToRankingEntity2();
         Optional<Ranking> rankingExist = rankingRepository.findById(ranking.getId());
         if (rankingExist.isPresent()){
             throw  new RuntimeException("This Member { " + member.getNum() +" } is already Registered To This Competition");
         }
+        ranking.setScore(0);
+        ranking.setRank(0);
         return rankingRepository.save(ranking);
     }
 
@@ -39,8 +44,4 @@ public class RankingServiceImpl implements RankingService {
         return rankingRepository.findAll();
     }
 
-    @Override
-    public List<Ranking> getScore(String competitionCode) {
-        return null;
-    }
 }

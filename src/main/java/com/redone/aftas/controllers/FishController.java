@@ -1,6 +1,6 @@
 package com.redone.aftas.controllers;
 
-import com.redone.aftas.dto.FishRequestDto;
+import com.redone.aftas.dto.fishDto.FishRequestDto;
 import com.redone.aftas.models.Fish;
 import com.redone.aftas.services.FishService;
 import lombok.RequiredArgsConstructor;

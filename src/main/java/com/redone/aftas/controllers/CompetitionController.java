@@ -21,4 +21,9 @@ public class CompetitionController {
     public List<Competition> getCompetitions(){
         return competitionService.getCompetitions();
     }
+
+//    @GetMapping("Score/{id}")
+//    public String getScore(@PathVariable String competitionCode){
+//        return competitionService.getScore(competitionCode);
+//    }
 }

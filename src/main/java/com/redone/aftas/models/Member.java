@@ -24,9 +24,9 @@ public class Member {
     private String nationality;
     private String identityNumber;
     private IdentityDocumentType identityDocument;
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Ranking> rankings;
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member" , fetch = FetchType.LAZY)
     private List<Hunting> huntingList;
 }

@@ -11,4 +11,5 @@ public interface CompetitionService {
     Competition addCompetition(CompetitionRequestDto competitionRequestDto);
 
     List<Competition> getCompetitions();
+
 }

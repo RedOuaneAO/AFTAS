@@ -1,4 +1,4 @@
-package com.redone.aftas.dto;
+package com.redone.aftas.dto.fishDto;
 
 import com.redone.aftas.models.Fish;
 import com.redone.aftas.models.Level;

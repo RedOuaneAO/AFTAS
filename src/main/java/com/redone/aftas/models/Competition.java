@@ -27,6 +27,6 @@ public class Competition {
     private double amount;
     @OneToMany(mappedBy = "competition", fetch = FetchType.LAZY)
     private List<Ranking> rankings;
-    @OneToMany(mappedBy = "competition")
+    @OneToMany(mappedBy = "competition" ,fetch = FetchType.LAZY)
     private List<Hunting> huntingList;
 }

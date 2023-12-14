@@ -1,4 +1,4 @@
-package com.redone.aftas.dto;
+package com.redone.aftas.dto.huntingDto;
 
 import com.redone.aftas.models.Competition;
 import com.redone.aftas.models.Fish;

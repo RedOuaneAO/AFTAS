@@ -1,13 +1,17 @@
 package com.redone.aftas.services.Impl;
 
-import com.redone.aftas.dto.HuntingRequestDto;
+import com.redone.aftas.dto.huntingDto.HuntingRequestDto;
+import com.redone.aftas.dto.huntingDto.HuntingResponseDto;
 import com.redone.aftas.models.*;
 import com.redone.aftas.repositories.*;
 import com.redone.aftas.services.HuntingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +22,7 @@ public class HuntingServiceImpl implements HuntingService {
     private final RankingRepository rankingRepository;
     private final FishRepository fishRepository;
     @Override
-    public Hunting addHunting(HuntingRequestDto huntingRequestDto) {
+    public HuntingResponseDto addHunting(HuntingRequestDto huntingRequestDto) {
         Member member = memberRepository.findById(huntingRequestDto.getMemberNum())
                 .orElseThrow(()->new RuntimeException("This Member Doesn't Exist "));
         Competition competition = competitionRepository.findById(huntingRequestDto.getCompetitionCode())
@@ -31,15 +35,34 @@ public class HuntingServiceImpl implements HuntingService {
             throw new RuntimeException("Your fish's weight is below average");
         }
         Optional<Hunting> HuntingExist = huntingRepository.findByCompetitionAndMemberAndFish(competition,member,fish);
-        Hunting hunting = huntingRequestDto.mapToHuntingEntity();
         if(HuntingExist.isPresent()){
             Hunting oldHunting =HuntingExist.get();
             oldHunting.setNumberOfFish(oldHunting.getNumberOfFish()+1);
-            return huntingRepository.save(oldHunting);
+            Hunting savedHanting = huntingRepository.save(oldHunting);
+            Integer score = addScore(competition,member);
+            ranking.setScore(score);
+            rankingRepository.save(ranking);
+            return savedHanting.mapToResponseDto();
         }else {
+            Hunting hunting = huntingRequestDto.mapToHuntingEntity();
             hunting.setNumberOfFish(1);
-            return huntingRepository.save(hunting);
+            hunting.setFish(fish);
+            Hunting savedHanting = huntingRepository.save(hunting);
+            Integer score = addScore(competition,member);
+            ranking.setScore(score);
+            rankingRepository.save(ranking);
+            return savedHanting.mapToResponseDto();
         }
+    }
 
+    public Integer addScore(Competition competition , Member member) {
+        Integer score =0;
+        List<HuntingResponseDto> huntings = huntingRepository.findByCompetitionAndMember(competition , member)
+                .stream().map(hunting -> hunting.mapToResponseDto())
+                .collect(Collectors.toList());
+        for (HuntingResponseDto hunting:huntings) {
+            score += hunting.getFish().getLevel().getPoints() * hunting.getNumberOfFish() ;
+        }
+        return score;
     }
 }
