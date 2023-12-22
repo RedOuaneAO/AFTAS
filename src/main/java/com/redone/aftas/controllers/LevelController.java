@@ -6,12 +6,10 @@ import com.redone.aftas.services.LevelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,5 +21,9 @@ public class LevelController {
     @PostMapping("Level")
     public Level addLevel(@RequestBody LevelRequestDto levelRequestDto){
             return levelService.addLevel(levelRequestDto);
+    }
+    @GetMapping("Levels")
+    public List<Level> getAllLevels(){
+        return levelService.getLevels();
     }
 }

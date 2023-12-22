@@ -1,14 +1,13 @@
 package com.redone.aftas.controllers;
 
-import com.redone.aftas.dto.MemberRequestDto;
+import com.redone.aftas.dto.memberDto.MemberRequestDto;
+import com.redone.aftas.dto.memberDto.MemberResponseDto;
 import com.redone.aftas.models.Member;
 import com.redone.aftas.services.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,5 +18,9 @@ public class MemberController {
         @PostMapping("Member")
         public Member addMember(@RequestBody MemberRequestDto memberRequestDto){
               return memberService.addNewMember(memberRequestDto);
+        }
+        @GetMapping("Members")
+        public List<MemberResponseDto> getMembers(){
+            return  memberService.getMembers();
         }
 }

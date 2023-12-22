@@ -1,4 +1,4 @@
-package com.redone.aftas.dto;
+package com.redone.aftas.dto.memberDto;
 
 import com.redone.aftas.models.Member;
 import com.redone.aftas.models.enums.IdentityDocumentType;
@@ -17,9 +17,7 @@ import java.util.Date;
 @Builder
 @Data
 public class MemberRequestDto {
-    @NotNull(message = "num cannot be null.")
-    @Positive(message = "num cannot be negative value.")
-    private Integer memberNum;
+
     @NotNull(message = "Member name cannot be null.")
     @NotBlank(message = "Member name cannot be blank.")
     private String memberName;
@@ -39,7 +37,6 @@ public class MemberRequestDto {
 
     public Member mapToMemberEntity(){
        return Member.builder()
-               .num(memberNum)
                .name(memberName)
                .familyName(familyName)
                .nationality(nationality)

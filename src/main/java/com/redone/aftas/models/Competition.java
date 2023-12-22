@@ -1,5 +1,6 @@
 package com.redone.aftas.models;
 
+import com.redone.aftas.dto.competitionDto.CompetitionResponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,4 +30,17 @@ public class Competition {
     private List<Ranking> rankings;
     @OneToMany(mappedBy = "competition" ,fetch = FetchType.LAZY)
     private List<Hunting> huntingList;
+
+
+    public CompetitionResponseDto mapToCompResponseDto(){
+        return CompetitionResponseDto.builder()
+                .code(code)
+                .date(date)
+                .startTime(startTime)
+                .endTime(endTime)
+                .numberOfParticipants(numberOfParticipants)
+                .location(location)
+                .amount(amount)
+                .build();
+    }
 }

@@ -1,6 +1,7 @@
 package com.redone.aftas.controllers;
 
 import com.redone.aftas.dto.fishDto.FishRequestDto;
+import com.redone.aftas.dto.fishDto.FishResponseDto;
 import com.redone.aftas.models.Fish;
 import com.redone.aftas.services.FishService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class FishController {
         return fishService.addFish(fishRequestDto);
     }
    @GetMapping("Fishs")
-    public List<Fish> GetAllFishs(){
+    public List<FishResponseDto> GetAllFishs(){
         return fishService.getAllFishs();
     }
 }

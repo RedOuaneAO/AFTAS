@@ -4,7 +4,7 @@ import com.redone.aftas.dto.huntingDto.HuntingRequestDto;
 import com.redone.aftas.dto.huntingDto.HuntingResponseDto;
 import com.redone.aftas.models.*;
 import com.redone.aftas.repositories.*;
-import com.redone.aftas.services.HuntingService;
+import com.redone.aftas.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +14,20 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+
 public class HuntingServiceImpl implements HuntingService {
     private final HuntingRepository huntingRepository;
     private final MemberRepository memberRepository;
     private final CompetitionRepository competitionRepository;
+
+    public HuntingServiceImpl(HuntingRepository huntingRepository, MemberRepository memberRepository, CompetitionRepository competitionRepository, RankingRepository rankingRepository, FishRepository fishRepository) {
+        this.huntingRepository = huntingRepository;
+        this.memberRepository = memberRepository;
+        this.competitionRepository = competitionRepository;
+        this.rankingRepository = rankingRepository;
+        this.fishRepository = fishRepository;
+    }
+
     private final RankingRepository rankingRepository;
     private final FishRepository fishRepository;
     @Override
@@ -39,8 +48,7 @@ public class HuntingServiceImpl implements HuntingService {
             Hunting oldHunting =HuntingExist.get();
             oldHunting.setNumberOfFish(oldHunting.getNumberOfFish()+1);
             Hunting savedHanting = huntingRepository.save(oldHunting);
-            Integer score = addScore(competition,member);
-            ranking.setScore(score);
+            ranking.setScore(addScore(competition,member));
             rankingRepository.save(ranking);
             return savedHanting.mapToResponseDto();
         }else {
@@ -48,11 +56,16 @@ public class HuntingServiceImpl implements HuntingService {
             hunting.setNumberOfFish(1);
             hunting.setFish(fish);
             Hunting savedHanting = huntingRepository.save(hunting);
-            Integer score = addScore(competition,member);
-            ranking.setScore(score);
+            ranking.setScore( addScore(competition,member));
             rankingRepository.save(ranking);
             return savedHanting.mapToResponseDto();
         }
+    }
+
+    @Override
+    public List<HuntingResponseDto> getMemberHunt(String competitionCode, Integer memberNum) {
+        return huntingRepository.findByCompetitionAndMember(Competition.builder().code(competitionCode).build(), Member.builder().num(memberNum).build()).stream().map(hunting2 -> hunting2.mapToResponseDto())
+                .collect(Collectors.toList());
     }
 
     public Integer addScore(Competition competition , Member member) {
@@ -65,4 +78,5 @@ public class HuntingServiceImpl implements HuntingService {
         }
         return score;
     }
+
 }

@@ -1,4 +1,4 @@
-package com.redone.aftas.dto;
+package com.redone.aftas.dto.competitionDto;
 
 import com.redone.aftas.models.Competition;
 import jakarta.validation.constraints.Future;
@@ -18,9 +18,6 @@ import java.time.LocalTime;
 @Builder
 @Data
 public class CompetitionRequestDto {
-    @NotNull(message = "Competition Code Cannot be Null.")
-    @NotBlank(message = "Competition Code Cannot be Blank.")
-    private String competitionCode;
     @NotNull(message = "Date Cannot be Null.")
     @Future(message = "Date Cannot be In The Past.")
     private LocalDate date;
@@ -38,7 +35,6 @@ public class CompetitionRequestDto {
 
     public Competition mapToCompetitionEntity(){
        return Competition.builder()
-               .code(competitionCode)
                .date(date)
                .startTime(startTime)
                .endTime(endTime)

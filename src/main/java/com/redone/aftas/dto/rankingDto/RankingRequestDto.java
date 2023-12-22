@@ -1,4 +1,4 @@
-package com.redone.aftas.dto;
+package com.redone.aftas.dto.rankingDto;
 
 
 import com.redone.aftas.models.Competition;
