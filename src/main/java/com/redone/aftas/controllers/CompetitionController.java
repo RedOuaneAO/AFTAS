@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class CompetitionController {
     private final CompetitionService competitionService;
     @PostMapping("Competition")
-    public Competition addCompetition(@Valid @RequestBody CompetitionRequestDto competitionRequestDto){
+    public CompetitionResponseDto addCompetition(@Valid @RequestBody CompetitionRequestDto competitionRequestDto){
         return competitionService.addCompetition(competitionRequestDto);
     }
     @GetMapping("Competitions")
@@ -30,8 +30,7 @@ public class CompetitionController {
     }
     @GetMapping("CompetitionsPaginated")
     public List<CompetitionResponseDto> getCompetitionsPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size){
-        return competitionService.getCompetitionsPaginated(PageRequest.of(page,size)).stream().map(competition -> competition
-                .mapToCompResponseDto()).collect(Collectors.toList());
+        return competitionService.getCompetitionsPaginated(PageRequest.of(page,size));
     }
 
 

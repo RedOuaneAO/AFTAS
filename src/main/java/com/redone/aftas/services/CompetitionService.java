@@ -13,10 +13,10 @@ import java.util.List;
 
 @Service
 public interface CompetitionService {
-    Competition addCompetition(CompetitionRequestDto competitionRequestDto);
+    CompetitionResponseDto addCompetition(CompetitionRequestDto competitionRequestDto);
 
     List<CompetitionResponseDto> getCompetitions();
 
 
-    Page<Competition> getCompetitionsPaginated(Pageable pageable);
+    List<CompetitionResponseDto> getCompetitionsPaginated(Pageable pageable);
 }

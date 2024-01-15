@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class CompetitionServiceImpl implements CompetitionService {
     private final CompetitionRepository competitionRepository;
     @Override
-    public Competition addCompetition(CompetitionRequestDto competitionRequestDto) {
+    public CompetitionResponseDto addCompetition(CompetitionRequestDto competitionRequestDto) {
         if(competitionRequestDto.getStartTime().isAfter(competitionRequestDto.getEndTime())){
             throw new RuntimeException("the start time cannot be after end time");
         }
@@ -42,7 +42,7 @@ public class CompetitionServiceImpl implements CompetitionService {
         String competitionCode =generateCompetitionCode(competitionRequestDto.getLocation() , competitionRequestDto.getDate());
         Competition competition =competitionRequestDto.mapToCompetitionEntity();
         competition.setCode(competitionCode);
-        return competitionRepository.save(competition);
+        return competitionRepository.save(competition).mapToCompResponseDto();
     }
     public String generateCompetitionCode(String location, LocalDate date) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yy-MM-dd");
@@ -58,8 +58,9 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
-    public Page<Competition> getCompetitionsPaginated(Pageable pageable) {
-        return competitionRepository.findAll(pageable);
+    public List<CompetitionResponseDto> getCompetitionsPaginated(Pageable pageable) {
+        return competitionRepository.findAll(pageable).stream().map(competition -> competition
+                .mapToCompResponseDto()).collect(Collectors.toList());
     }
 
 
