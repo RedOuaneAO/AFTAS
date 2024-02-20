@@ -1,4 +1,4 @@
-FROM  maven:3.9.6-eclipse-temurin-17-alpine AS build
+FROM  maven:3.9.6 AS build
 
 WORKDIR /app
 
@@ -12,8 +12,10 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY --from=build /app/target/*.jar /app/app.jar
+COPY target/AFTAS-0.0.1-SNAPSHOT.jar ./
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+# CMD ["java", "-jar", "app.jar"]
+
+CMD ["java", "-jar", "AFTAS-0.0.1-SNAPSHOT.jar"]

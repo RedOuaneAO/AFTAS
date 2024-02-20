@@ -17,7 +17,7 @@ public class MemberController {
 
         @PostMapping("Member")
         public Member addMember(@RequestBody MemberRequestDto memberRequestDto){
-              return memberService.addNewMember(memberRequestDto);
+            return memberService.addNewMember(memberRequestDto);
         }
         @GetMapping("Members")
         public List<MemberResponseDto> getMembers(){
