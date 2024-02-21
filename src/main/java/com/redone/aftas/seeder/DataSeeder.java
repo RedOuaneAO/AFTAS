@@ -25,8 +25,9 @@ public class DataSeeder implements CommandLineRunner {
         Authority authority1= seedAuthority(AuthorityType.CAN_EDIT);
         Authority authority2= seedAuthority(AuthorityType.CAN_ADD);
         Authority authority3= seedAuthority(AuthorityType.CAN_DELETE);
+        Authority authority4= seedAuthority(AuthorityType.CAN_VIEW);
 
-        seedRole(RoleName.ADMIN , List.of(authority1, authority2, authority3));
+        seedRole(RoleName.ADMIN , List.of(authority1, authority2, authority3, authority4));
         seedRole(RoleName.USER , List.of(authority2,authority3));
     }
     private Authority seedAuthority(AuthorityType authorityType){

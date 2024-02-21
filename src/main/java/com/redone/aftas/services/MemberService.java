@@ -12,4 +12,6 @@ public interface MemberService {
     Member addNewMember(MemberRequestDto memberRequestDto);
 
     List<MemberResponseDto> getMembers();
+
+    MemberResponseDto save(Member user);
 }

@@ -2,12 +2,13 @@ package com.redone.aftas.services;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
-
+@Service
 public interface JwtService {
     String extractUsername(String jwtToken);
 

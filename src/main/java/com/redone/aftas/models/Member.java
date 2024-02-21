@@ -9,7 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 @Entity
@@ -17,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-public class Member {
+public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer num;
@@ -27,10 +30,11 @@ public class Member {
     private String nationality;
     private String identityNumber;
 
-//    now
     private String email;
     private String password;
-//
+    @ManyToOne
+    private Role role;
+
     private IdentityDocumentType identityDocument;
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     @JsonManagedReference
@@ -43,9 +47,40 @@ public class Member {
         return  MemberResponseDto.builder()
                 .memberNum(num)
                 .fullName(familyName+" "+name)
+                .email(email)
                 .nationality(nationality)
                 .identityNumber(identityNumber)
                 .identityDocumentType(identityDocument.name())
                 .build();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

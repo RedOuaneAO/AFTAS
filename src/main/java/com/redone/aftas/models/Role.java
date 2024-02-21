@@ -25,11 +25,11 @@ public class Role {
     private RoleName role;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Authority> authorities;
-//    public List<GrantedAuthority> getAuthorities() {
-//        List<GrantedAuthority> authorityList = authorities.stream()
-//                .map(authority -> new SimpleGrantedAuthority(authority.getAuthority().name()))
-//                .collect(Collectors.toList());
-//        authorityList.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
-//        return authorityList;
-//    }
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorityList = authorities.stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getAuthority().name()))
+                .collect(Collectors.toList());
+        authorityList.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return authorityList;
+    }
 }

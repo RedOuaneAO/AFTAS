@@ -33,4 +33,9 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberResponseDto> getMembers() {
         return memberRepository.findAll().stream().map(member -> member.mepToMRDto()).collect(Collectors.toList());
     }
+
+    @Override
+    public MemberResponseDto save(Member user) {
+        return memberRepository.save(user).mepToMRDto();
+    }
 }

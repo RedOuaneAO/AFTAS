@@ -7,13 +7,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
+@Service
 public class JwtServiceImpl implements JwtService {
 
     private static final String SECRET_KEY = "6A335255515654786E676341565752614A586D423679644E65706F31484E4A6E";
