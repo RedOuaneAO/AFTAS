@@ -38,4 +38,9 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponseDto save(Member user) {
         return memberRepository.save(user).mepToMRDto();
     }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
 }

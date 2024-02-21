@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AuthenticationResponse {
     private String email;
-    private List<GrantedAuthority> authorities;
+    private List<String> authorities;
     private String token;
 
 }

@@ -11,6 +11,8 @@ import com.redone.aftas.services.JwtService;
 import com.redone.aftas.services.MemberService;
 import com.redone.aftas.services.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final MemberService memberService;
     private final JwtService jwtService;
     private  final RoleService roleService;
+    private final AuthenticationManager authenticationManager;
+
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         Role role =roleService.findByRole(RoleName.USER);
@@ -41,12 +45,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .email(registredUser.getEmail())
-                .authorities(user.getRole().getAuthorities())
+                .authorities(user.getRole().getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).toList())
                 .token(jwtToken).build();
     }
 
     @Override
     public AuthenticationResponse authenticate(AuthenticateRequest request) {
-        return null;
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword())
+        );
+        var user = memberService.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException("user doesn't exist"));
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .authorities(user.getRole().getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).toList())
+                .email(user.getEmail())
+                .token(jwtToken).build();
     }
+
 }
