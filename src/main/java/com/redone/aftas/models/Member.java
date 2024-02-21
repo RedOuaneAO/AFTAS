@@ -26,6 +26,11 @@ public class Member {
     private Date accessionDate;
     private String nationality;
     private String identityNumber;
+
+//    now
+    private String email;
+    private String password;
+//
     private IdentityDocumentType identityDocument;
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     @JsonManagedReference
