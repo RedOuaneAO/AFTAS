@@ -1,5 +1,6 @@
 package com.redone.aftas.services;
 
+import com.redone.aftas.dto.UpdateRoleRequest;
 import com.redone.aftas.dto.memberDto.MemberRequestDto;
 import com.redone.aftas.dto.memberDto.MemberResponseDto;
 import com.redone.aftas.models.Member;
@@ -17,4 +18,8 @@ public interface MemberService {
     MemberResponseDto save(Member user);
 
     Optional<Member> findByEmail(String email);
+
+    MemberResponseDto findById(int id);
+
+    String updateRole(UpdateRoleRequest updateRoleRequest);
 }

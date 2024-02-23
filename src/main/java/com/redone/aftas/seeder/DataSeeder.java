@@ -56,11 +56,14 @@ public class DataSeeder implements CommandLineRunner {
         return null;
     }
     private void seedSuperAdmin(Role role){
-        Member member =Member.builder()
-                .email("superAdmin@gmail.com")
-                .password(passwordEncoder.encode("12345"))
-                .role(role)
-                .build();
-        memberRepository.save(member);
+        Optional<Member> existUser = memberRepository.findByEmail("superAdmin@gmail.com");
+        if (!existUser.isPresent()){
+            Member user =Member.builder()
+                    .email("superAdmin@gmail.com")
+                    .password(passwordEncoder.encode("12345"))
+                    .role(role)
+                    .build();
+            memberRepository.save(user);
+        }
     }
 }

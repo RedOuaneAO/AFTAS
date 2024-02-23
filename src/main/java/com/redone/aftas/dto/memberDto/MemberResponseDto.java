@@ -16,5 +16,6 @@ public class MemberResponseDto {
     private String identityNumber;
     private String identityDocumentType;
     private String email;
+    private String role;
 
 }

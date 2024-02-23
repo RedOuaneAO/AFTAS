@@ -50,7 +50,8 @@ public class Member implements UserDetails {
                 .email(email)
                 .nationality(nationality)
                 .identityNumber(identityNumber)
-                .identityDocumentType(identityDocument.name())
+                .identityDocumentType(identityDocument != null ? identityDocument.name() : null)
+                .role(role.getRole().name())
                 .build();
     }
 
